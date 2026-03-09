@@ -1,6 +1,6 @@
 import React from 'react';
 import { CallScreen } from './components/CallScreen';
-import { ExternalLink, Phone, Mic, MessageSquare, Volume2, HelpCircle } from 'lucide-react';
+import { ExternalLink, Phone, Mic, MessageSquare, Volume2, HelpCircle, Github, Mail, Youtube } from 'lucide-react';
 
 function App() {
   return (
@@ -8,7 +8,7 @@ function App() {
       {/* Broadcast Banner */}
       <div className="bg-primary/10 border-b border-primary/20 p-3 text-center">
         <p className="text-sm max-w-4xl mx-auto leading-relaxed">
-          <span className="font-bold text-primary mr-2">Demo Notice:</span>
+          <span className="font-bold text-primary mr-2">Notice:</span>
           Due to temporary Amazon Connect availability issues and Exotel trial call limitations during development, 
           this prototype simulates the phone call interface directly in the website. 
           The backend AI conversation pipeline remains the same and is powered by AWS, Bhashini, and Bedrock.
@@ -26,6 +26,35 @@ function App() {
           <p className="text-muted-foreground text-lg">
             AI-powered voice assistant helping rural citizens discover government schemes.
           </p>
+          
+          {/* Social Links */}
+          <div className="flex items-center justify-center gap-4 mt-6">
+            <a 
+              href="https://youtu.be/2H13NypayYU?si=KJxjckiU_iQrRr-h" 
+              target="_blank" 
+              rel="noopener noreferrer"
+              className="flex items-center gap-2 text-sm text-muted-foreground hover:text-primary transition-colors"
+            >
+              <Youtube className="w-5 h-5" />
+              <span>Watch Demo</span>
+            </a>
+            <a 
+              href="https://github.com/vimalluuu/AI-IVR" 
+              target="_blank" 
+              rel="noopener noreferrer"
+              className="flex items-center gap-2 text-sm text-muted-foreground hover:text-primary transition-colors"
+            >
+              <Github className="w-5 h-5" />
+              <span>GitHub</span>
+            </a>
+            <a 
+              href="mailto:traceherb.work@gmail.com"
+              className="flex items-center gap-2 text-sm text-muted-foreground hover:text-primary transition-colors"
+            >
+              <Mail className="w-5 h-5" />
+              <span>Contact</span>
+            </a>
+          </div>
         </header>
 
         {/* Video Ad Section */}
