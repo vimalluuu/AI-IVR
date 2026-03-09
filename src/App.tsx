@@ -30,12 +30,16 @@ function App() {
 
         {/* Video Ad Section */}
         <div className="w-full max-w-2xl mb-12 animate-fade-in">
-          <div className="relative rounded-2xl overflow-hidden shadow-2xl border-2 border-primary/20">
+          <div className="relative rounded-2xl overflow-hidden shadow-2xl border-2 border-primary/20 group">
             <video
+              ref={(el) => {
+                if (el) {
+                  el.volume = 0.5;
+                }
+              }}
               autoPlay
               muted
               loop
-              controls
               playsInline
               className="w-full h-auto"
               poster="/vite.svg"
@@ -43,6 +47,24 @@ function App() {
               <source src="/Voice-Flow-System-Mar-9-18-57-07.mp4" type="video/mp4" />
               Your browser does not support the video tag.
             </video>
+            {/* Custom Fullscreen Button */}
+            <button
+              onClick={(e) => {
+                const videoContainer = e.currentTarget.parentElement?.querySelector('video');
+                if (videoContainer) {
+                  if (document.fullscreenElement) {
+                    document.exitFullscreen();
+                  } else {
+                    videoContainer.parentElement?.requestFullscreen();
+                  }
+                }
+              }}
+              className="absolute bottom-3 right-3 bg-black/60 hover:bg-black/80 text-white p-2 rounded-lg opacity-0 group-hover:opacity-100 transition-opacity"
+            >
+              <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                <path d="M8 3v3a2 2 0 0 1-2 2H3m18 0h-3a2 2 0 0 1-2-2V3m0 18v-3a2 2 0 0 1 2-2h3M3 16h3a2 2 0 0 1 2 2v3"/>
+              </svg>
+            </button>
           </div>
         </div>
 
