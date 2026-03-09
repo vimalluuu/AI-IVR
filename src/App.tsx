@@ -1,5 +1,6 @@
 import React from 'react';
 import { CallScreen } from './components/CallScreen';
+import { ExternalLink } from 'lucide-react';
 
 function App() {
   return (
@@ -27,8 +28,55 @@ function App() {
           </p>
         </header>
 
+        {/* Video Ad Section */}
+        <div className="w-full max-w-2xl mb-12 animate-fade-in">
+          <div className="relative rounded-2xl overflow-hidden shadow-2xl border-2 border-primary/20">
+            <video
+              autoPlay
+              muted
+              loop
+              playsInline
+              className="w-full h-auto"
+              poster="/vite.svg"
+            >
+              <source src="/Voice-Flow-System-Mar-9-18-57-07.mp4" type="video/mp4" />
+              Your browser does not support the video tag.
+            </video>
+            <div className="absolute top-3 left-3 bg-black/60 backdrop-blur-sm px-3 py-1 rounded-full text-xs text-white font-medium">
+              AD
+            </div>
+          </div>
+        </div>
+
         <div className="w-full max-w-md animate-fade-in">
           <CallScreen />
+        </div>
+
+        {/* Scheme Apply - Application Website */}
+        <div className="w-full max-w-4xl mt-16 animate-fade-in">
+          <div className="flex items-center justify-center gap-3 mb-6">
+            <h2 className="text-2xl md:text-3xl font-bold text-foreground">
+              Apply for Schemes
+            </h2>
+            <a 
+              href="https://trust-leaf.lovable.app/" 
+              target="_blank" 
+              rel="noopener noreferrer"
+              className="flex items-center gap-1 text-sm text-primary hover:underline"
+            >
+              <ExternalLink className="w-4 h-4" />
+              Open in new tab
+            </a>
+          </div>
+          <div className="relative w-full h-[600px] md:h-[700px] rounded-2xl overflow-hidden border-2 border-primary/20 shadow-2xl">
+            <iframe
+              src="https://trust-leaf.lovable.app/"
+              title="Trust Leaf Application"
+              className="w-full h-full"
+              allow="accelerometer; ambient-light-sensor; camera; document-domain; encrypted-media; geolocation; gyroscope; hid; microphone; midi; payment; usb; vr"
+              sandbox="allow-forms allow-modals allow-popups allow-presentation allow-same-origin allow-scripts"
+            />
+          </div>
         </div>
       </main>
 
