@@ -1,17 +1,18 @@
 import React from 'react';
 import { CallScreen } from './components/CallScreen';
-import { ExternalLink, Phone, Mic, MessageSquare, Volume2, HelpCircle, Github, Mail, Youtube } from 'lucide-react';
+import { ExternalLink, Phone, Mic, MessageSquare, Volume2, HelpCircle, Github, Mail, Youtube, Globe } from 'lucide-react';
+import { LanguageProvider, useLanguage, languages } from './hooks/useLanguage';
 
-function App() {
+function AppContent() {
+  const { language, setLanguage, t } = useLanguage();
+
   return (
     <div className="min-h-screen bg-background text-foreground font-sans selection:bg-primary/30">
       {/* Broadcast Banner */}
       <div className="bg-primary/10 border-b border-primary/20 p-3 text-center">
         <p className="text-sm max-w-4xl mx-auto leading-relaxed">
-          <span className="font-bold text-primary mr-2">Notice:</span>
-          Due to temporary Amazon Connect availability issues and Exotel trial call limitations during development, 
-          this prototype simulates the phone call interface directly in the website. 
-          The backend AI conversation pipeline remains the same and is powered by AWS, Bhashini, and Bedrock.
+          <span className="font-bold text-primary mr-2">{t.notice}</span>
+          {t.noticeText}
         </p>
       </div>
 
@@ -21,22 +22,40 @@ function App() {
             Trust Leaf – AI for Bharat
           </h1>
           <h2 className="text-xl md:text-2xl font-medium mb-3 text-foreground/80">
-            Government Scheme Voice Assistant
+            {t.subtitle}
           </h2>
           <p className="text-muted-foreground text-lg">
-            AI-powered voice assistant helping rural citizens discover government schemes.
+            {t.description}
           </p>
           
-          {/* Social Links */}
+          {/* Language Selector */}
           <div className="flex items-center justify-center gap-4 mt-6">
+            <div className="relative">
+              <select
+                value={language}
+                onChange={(e) => setLanguage(e.target.value as any)}
+                className="appearance-none bg-transparent border border-primary/30 rounded-lg px-4 py-2 pr-10 text-sm text-foreground focus:outline-none focus:ring-2 focus:ring-primary/50 cursor-pointer"
+              >
+                {languages.map((lang) => (
+                  <option key={lang.code} value={lang.code} className="bg-background text-foreground">
+                    {lang.nativeName}
+                  </option>
+                ))}
+              </select>
+              <Globe className="absolute right-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground pointer-events-none" />
+            </div>
+          </div>
+
+          {/* Social Links */}
+          <div className="flex items-center justify-center gap-4 mt-4">
             <a 
-              href="https://youtu.be/2H13NypayYU?si=KJxjckiU_iQrRr-h" 
+              href="https://youtu.be/2H13NypayYU?si=1J7S6isMBJvDVUwu" 
               target="_blank" 
               rel="noopener noreferrer"
               className="flex items-center gap-2 text-sm text-muted-foreground hover:text-primary transition-colors"
             >
               <Youtube className="w-5 h-5" />
-              <span>Watch Demo</span>
+              <span>{t.watchDemo}</span>
             </a>
             <a 
               href="https://github.com/vimalluuu/AI-IVR" 
@@ -45,14 +64,14 @@ function App() {
               className="flex items-center gap-2 text-sm text-muted-foreground hover:text-primary transition-colors"
             >
               <Github className="w-5 h-5" />
-              <span>GitHub</span>
+              <span>{t.github}</span>
             </a>
             <a 
               href="mailto:traceherb.work@gmail.com"
               className="flex items-center gap-2 text-sm text-muted-foreground hover:text-primary transition-colors"
             >
               <Mail className="w-5 h-5" />
-              <span>Contact</span>
+              <span>{t.contact}</span>
             </a>
           </div>
         </header>
@@ -102,9 +121,9 @@ function App() {
           <div className="text-center mb-10">
             <h2 className="text-3xl font-bold flex items-center justify-center gap-2 mb-4">
               <HelpCircle className="w-8 h-8 text-primary" />
-              How to Use Trust Leaf Assistant
+              {t.howToUse}
             </h2>
-            <p className="text-muted-foreground">Follow these simple steps to interact with our AI-powered voice assistant.</p>
+            <p className="text-muted-foreground">{t.howToUseDesc}</p>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
@@ -112,9 +131,9 @@ function App() {
               <div className="w-16 h-16 bg-primary/10 rounded-full flex items-center justify-center mb-4 text-primary">
                 <Phone className="w-8 h-8" />
               </div>
-              <h3 className="text-xl font-bold mb-2">1. Start the Call</h3>
+              <h3 className="text-xl font-bold mb-2">{t.step1Title}</h3>
               <p className="text-muted-foreground text-sm">
-                Click the <span className="text-primary font-bold">Call Button</span> on the phone interface. The system will begin ringing to connect you to the agent.
+                {t.step1Desc}
               </p>
             </div>
 
@@ -122,9 +141,9 @@ function App() {
               <div className="w-16 h-16 bg-primary/10 rounded-full flex items-center justify-center mb-4 text-primary">
                 <Mic className="w-8 h-8" />
               </div>
-              <h3 className="text-xl font-bold mb-2">2. Speak to Mic</h3>
+              <h3 className="text-xl font-bold mb-2">{t.step2Title}</h3>
               <p className="text-muted-foreground text-sm">
-                Once connected, press the <span className="text-primary font-bold">Microphone Button</span> and ask your question about any government scheme within 3 seconds.
+                {t.step2Desc}
               </p>
             </div>
 
@@ -132,23 +151,34 @@ function App() {
               <div className="w-16 h-16 bg-primary/10 rounded-full flex items-center justify-center mb-4 text-primary">
                 <Volume2 className="w-8 h-8" />
               </div>
-              <h3 className="text-xl font-bold mb-2">3. Get AI Response</h3>
+              <h3 className="text-xl font-bold mb-2">{t.step3Title}</h3>
               <p className="text-muted-foreground text-sm">
-                The AI will process your request and respond with voice and text. Whenever you have more questions, simply click the mic button again!
+                {t.step3Desc}
               </p>
             </div>
           </div>
         </div>
 
         <div className="w-full max-w-md animate-fade-in">
-          <CallScreen />
+          <CallScreen 
+            translations={{
+              readyForCall: t.readyForCall,
+              ringing: t.ringing,
+              connected: t.connected,
+              listening: t.listening,
+              thinking: t.thinking,
+              speaking: t.speaking,
+              callEnded: t.callEnded,
+              assistantName: t.assistantName
+            }}
+          />
         </div>
 
         {/* Scheme Apply - Application Website */}
         <div className="w-full max-w-4xl mt-16 animate-fade-in">
           <div className="flex items-center justify-center gap-3 mb-6">
             <h2 className="text-2xl md:text-3xl font-bold text-foreground">
-              Apply for Schemes
+              {t.applyForSchemes}
             </h2>
             <a 
               href="https://trust-leaf.lovable.app/" 
@@ -157,7 +187,7 @@ function App() {
               className="flex items-center gap-1 text-sm text-primary hover:underline"
             >
               <ExternalLink className="w-4 h-4" />
-              Open in new tab
+              {t.openInNewTab}
             </a>
           </div>
           <div className="relative w-full h-[600px] md:h-[700px] rounded-2xl overflow-hidden border-2 border-primary/20 shadow-2xl">
@@ -173,9 +203,17 @@ function App() {
       </main>
 
       <footer className="py-8 text-center text-muted-foreground text-sm">
-        <p>&copy; 2024 Trust Leaf. Built for AI for Bharat.</p>
+        <p>{t.footer}</p>
       </footer>
     </div>
+  );
+}
+
+function App() {
+  return (
+    <LanguageProvider>
+      <AppContent />
+    </LanguageProvider>
   );
 }
 
