@@ -1,6 +1,6 @@
 import React from 'react';
 import { CallScreen } from './components/CallScreen';
-import { ExternalLink } from 'lucide-react';
+import { ExternalLink, Phone, Mic, MessageSquare, Volume2, HelpCircle } from 'lucide-react';
 
 function App() {
   return (
@@ -35,6 +35,7 @@ function App() {
               autoPlay
               muted
               loop
+              controls
               playsInline
               className="w-full h-auto"
               poster="/vite.svg"
@@ -42,8 +43,48 @@ function App() {
               <source src="/Voice-Flow-System-Mar-9-18-57-07.mp4" type="video/mp4" />
               Your browser does not support the video tag.
             </video>
-            <div className="absolute top-3 left-3 bg-black/60 backdrop-blur-sm px-3 py-1 rounded-full text-xs text-white font-medium">
-              AD
+          </div>
+        </div>
+
+        {/* Tutorial Section */}
+        <div className="w-full max-w-4xl mb-16 animate-fade-in">
+          <div className="text-center mb-10">
+            <h2 className="text-3xl font-bold flex items-center justify-center gap-2 mb-4">
+              <HelpCircle className="w-8 h-8 text-primary" />
+              How to Use Trust Leaf Assistant
+            </h2>
+            <p className="text-muted-foreground">Follow these simple steps to interact with our AI-powered voice assistant.</p>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+            <div className="flex flex-col items-center text-center p-6 glass rounded-2xl border border-primary/10 transition-all hover:border-primary/30">
+              <div className="w-16 h-16 bg-primary/10 rounded-full flex items-center justify-center mb-4 text-primary">
+                <Phone className="w-8 h-8" />
+              </div>
+              <h3 className="text-xl font-bold mb-2">1. Start the Call</h3>
+              <p className="text-muted-foreground text-sm">
+                Click the <span className="text-primary font-bold">Call Button</span> on the phone interface. The system will begin ringing to connect you to the agent.
+              </p>
+            </div>
+
+            <div className="flex flex-col items-center text-center p-6 glass rounded-2xl border border-primary/10 transition-all hover:border-primary/30">
+              <div className="w-16 h-16 bg-primary/10 rounded-full flex items-center justify-center mb-4 text-primary">
+                <Mic className="w-8 h-8" />
+              </div>
+              <h3 className="text-xl font-bold mb-2">2. Speak to Mic</h3>
+              <p className="text-muted-foreground text-sm">
+                Once connected, press the <span className="text-primary font-bold">Microphone Button</span> and ask your question about any government scheme within 3 seconds.
+              </p>
+            </div>
+
+            <div className="flex flex-col items-center text-center p-6 glass rounded-2xl border border-primary/10 transition-all hover:border-primary/30">
+              <div className="w-16 h-16 bg-primary/10 rounded-full flex items-center justify-center mb-4 text-primary">
+                <Volume2 className="w-8 h-8" />
+              </div>
+              <h3 className="text-xl font-bold mb-2">3. Get AI Response</h3>
+              <p className="text-muted-foreground text-sm">
+                The AI will process your request and respond with voice and text. Whenever you have more questions, simply click the mic button again!
+              </p>
             </div>
           </div>
         </div>
