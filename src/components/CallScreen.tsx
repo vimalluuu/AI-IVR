@@ -48,10 +48,10 @@ export function CallScreen() {
     switch (status) {
       case 'IDLE': return 'Ready for a call';
       case 'RINGING': return 'Ringing...';
-      case 'CONNECTED': return 'Connected';
+      case 'CONNECTED': return 'Tap mic to speak';
       case 'LISTENING': return 'Listening...';
-      case 'THINKING': return 'Thinking...';
-      case 'SPEAKING': return 'Assistant speaking...';
+      case 'THINKING': return 'AI is thinking...';
+      case 'SPEAKING': return 'AI is speaking...';
       case 'DISCONNECTED': return 'Call Ended';
       default: return '';
     }
@@ -160,7 +160,7 @@ export function CallScreen() {
         {/* Toggle Recording / Mic Button */}
         <button
           onClick={isRecording ? stopRecording : startRecording}
-          disabled={status === 'RINGING' || status === 'THINKING' || status === 'DISCONNECTED'}
+          disabled={status === 'RINGING' || status === 'THINKING' || status === 'SPEAKING' || status === 'DISCONNECTED'}
           className={cn(
             "w-16 h-16 rounded-full flex items-center justify-center transition-all active:scale-95 disabled:opacity-50 disabled:cursor-not-allowed shadow-lg",
             isRecording 
