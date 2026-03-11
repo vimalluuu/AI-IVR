@@ -19,7 +19,34 @@ function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
 }
 
-export function CallScreen() {
+interface CallScreenProps {
+  translations?: {
+    readyForCall?: string;
+    ringing?: string;
+    connected?: string;
+    listening?: string;
+    thinking?: string;
+    speaking?: string;
+    callEnded?: string;
+    assistantName?: string;
+    tapToStart?: string;
+  };
+}
+
+const defaultTranslations = {
+  readyForCall: 'Ready for a call',
+  ringing: 'Ringing...',
+  connected: 'Connected',
+  listening: 'Listening...',
+  thinking: 'Thinking...',
+  speaking: 'Assistant speaking...',
+  callEnded: 'Call Ended',
+  assistantName: 'Trust Leaf Assistant',
+  tapToStart: "Tap below to start discovering Bharat's government schemes.",
+};
+
+export function CallScreen({ translations }: CallScreenProps) {
+  const t = { ...defaultTranslations, ...translations };
   const {
     status,
     transcript,
@@ -46,13 +73,13 @@ export function CallScreen() {
 
   const getStatusText = () => {
     switch (status) {
-      case 'IDLE': return 'Ready for a call';
-      case 'RINGING': return 'Ringing...';
-      case 'CONNECTED': return 'Tap mic to speak';
-      case 'LISTENING': return 'Listening...';
-      case 'THINKING': return 'AI is thinking...';
-      case 'SPEAKING': return 'AI is speaking...';
-      case 'DISCONNECTED': return 'Call Ended';
+      case 'IDLE': return t.readyForCall;
+      case 'RINGING': return t.ringing;
+      case 'CONNECTED': return t.connected;
+      case 'LISTENING': return t.listening;
+      case 'THINKING': return t.thinking;
+      case 'SPEAKING': return t.speaking;
+      case 'DISCONNECTED': return t.callEnded;
       default: return '';
     }
   };
@@ -63,9 +90,9 @@ export function CallScreen() {
         <div className="w-24 h-24 bg-primary/20 rounded-full flex items-center justify-center mb-6 animate-pulse-subtle">
           <Activity className="w-12 h-12 text-primary" />
         </div>
-        <h3 className="text-2xl font-bold mb-2">Trust Leaf Assistant</h3>
+        <h3 className="text-2xl font-bold mb-2">{t.assistantName}</h3>
         <p className="text-muted-foreground mb-8 text-center">
-          Tap below to start discovering Bharat's government schemes.
+          {t.tapToStart}
         </p>
         <button
           onClick={startCall}
@@ -93,7 +120,7 @@ export function CallScreen() {
           )}
           {getStatusText()}
         </p>
-        <h3 className="text-xl font-bold text-white">Trust Leaf Assistant</h3>
+        <h3 className="text-xl font-bold text-white">{t.assistantName}</h3>
         {status !== 'RINGING' && status !== 'DISCONNECTED' && (
           <p className="text-muted-foreground font-mono mt-1 flex items-center justify-center gap-1">
             <Clock className="w-3 h-3" />
@@ -160,7 +187,7 @@ export function CallScreen() {
         {/* Toggle Recording / Mic Button */}
         <button
           onClick={isRecording ? stopRecording : startRecording}
-          disabled={status === 'RINGING' || status === 'THINKING' || status === 'SPEAKING' || status === 'DISCONNECTED'}
+          disabled={status === 'RINGING' || status === 'THINKING' || status === 'DISCONNECTED'}
           className={cn(
             "w-16 h-16 rounded-full flex items-center justify-center transition-all active:scale-95 disabled:opacity-50 disabled:cursor-not-allowed shadow-lg",
             isRecording 

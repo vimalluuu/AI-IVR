@@ -58,16 +58,11 @@ export function useVoiceCall() {
     setStatus('DISCONNECTED');
     setIsRecording(false);
     resetTimer();
-    if (recordingTimeoutRef.current) {
-      clearTimeout(recordingTimeoutRef.current);
-      recordingTimeoutRef.current = null;
-    }
     if (mediaRecorderRef.current && mediaRecorderRef.current.state === 'recording') {
       mediaRecorderRef.current.stop();
     }
     if (audioRef.current) {
       audioRef.current.pause();
-      audioRef.current.onended = null; // Prevent auto-restart after hang up
     }
     // Final disconnect after message
     setTimeout(() => setStatus('IDLE'), 1000);
@@ -153,12 +148,6 @@ export function useVoiceCall() {
   const playResponse = (base64: string) => {
     const blob = base64ToBlob(base64, 'audio/wav');
     const url = URL.createObjectURL(blob);
-
-    // Prevent audio overlap — stop any currently playing audio
-    if (audioRef.current) {
-      audioRef.current.pause();
-      audioRef.current.onended = null;
-    }
     
     if (!audioContextRef.current) {
       audioContextRef.current = new (window.AudioContext || (window as any).webkitAudioContext)();
@@ -170,7 +159,7 @@ export function useVoiceCall() {
       // Setup Analyser
       if (!analyserRef.current) {
         analyserRef.current = audioContextRef.current.createAnalyser();
-        analyserRef.current.fftSize = 64;
+        analyserRef.current.fftSize = 64; // Smaller for visualization
         const source = audioContextRef.current.createMediaElementSource(audioRef.current);
         source.connect(analyserRef.current);
         analyserRef.current.connect(audioContextRef.current.destination);
@@ -191,13 +180,12 @@ export function useVoiceCall() {
       });
       
       audioRef.current.onended = () => {
+        setStatus('CONNECTED');
         setAudioData(new Uint8Array(0));
         if (animationFrameRef.current) {
           cancelAnimationFrame(animationFrameRef.current);
         }
         URL.revokeObjectURL(url);
-        // Auto-resume listening after AI finishes speaking
-        startRecording();
       };
     }
   };
